@@ -4,18 +4,21 @@ module MPlayer
   module Screenshot
     extend self
     
-    def take(opts={})
-      
+    def take(filename, opts={})
+      Screenshoter.new(filename, opts[:mplayer_path] || 'mplayer').take(opts)
     end
   end
   
   class Screenshoter
-    def initialize(file, mplayer_cmd='mplayer')
+    def initialize(file, mplayer_cmd)
       @file = file
       @mplayer_cmd = mplayer_cmd
     end
     
     def take(opts={})
+      raise "Missing :at value, aborting." unless opts[:at]
+      raise "Missing :filename value, aborting." unless opts[:filename]
+      
       @opts = opts.dup
       normalize_path
       Dir.chdir '/tmp' do 
