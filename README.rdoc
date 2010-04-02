@@ -8,7 +8,6 @@ You can pass the path to your Mplayer binary with :mplayer_path
   
   MPlayer::Screenshot.take("lolcat.mp4", :mplayer_path => '/opt/bin/mplayer', :at => 25, :filename => 'test.png')
 
-Mplayer has to be in your $PATH or you have to 
 
 == Note on Patches/Pull Requests
  
