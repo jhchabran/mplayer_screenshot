@@ -2,7 +2,11 @@
 
 Want to generate a png preview of video ? 
 
-  MPlayer::Screenshoter.new("lolcat.mp4").take(:at => 25, :filename => 'test.png')
+  MPlayer::Screenshot.take("lolcat.mp4",:at => 25, :filename => 'test.png')
+  
+You can pass the path to your Mplayer binary with :mplayer_path
+  
+  MPlayer::Screenshot.take("lolcat.mp4", :mplayer_path => '/opt/bin/mplayer', :at => 25, :filename => 'test.png')
 
 Mplayer has to be in your $PATH or you have to 
 
