@@ -1,6 +1,10 @@
 = mplayer_screenshot
 
-Description goes here.
+Want to generate a png preview of video ? 
+
+  MPlayer::Screenshoter.new("lolcat.mp4").take(:at => 25, :filename => 'test.png')
+
+Mplayer has to be in your $PATH or you have to 
 
 == Note on Patches/Pull Requests
  
