@@ -19,7 +19,10 @@ module MPlayer
       @opts = opts.dup
       normalize_path
       Dir.chdir '/tmp' do 
-        mplayer(:frames => seconds_to_frame(opts[:at]), :vo => 'png', :nosound => "")
+        mplayer :frames  => 1, 
+                :vo      => 'png', 
+                :nosound => "",
+                :ss      => opts[:at]
         clean
       end
       
@@ -29,6 +32,11 @@ module MPlayer
       @opts[:filename] = File.expand_path @opts[:filename]
     end
     
+    # Delete all png generated files excepted the wanted one which 
+    # will be moved to where you specified. 
+    # Usually, there should be only one file, "0000001.png", 
+    # but if something goes wrong, many files could be created, 
+    # eating your freespace with tons of pngs, let's avoid this.
     def clean
       frames = Dir.glob('[0-9]*.png')
       frames.each do |file|
@@ -37,15 +45,6 @@ module MPlayer
       
       File.copy frames[-1], @opts[:filename]
       File.delete frames[-1]
-    end
-    
-    def seconds_to_frame(seconds)
-      (framerate * seconds).to_i
-    end
-    
-    def framerate
-      mplayer(:frames => 0, :identify => '').match(/(\d+.?\d+?) fps/)
-      $1.to_f
     end
     
     def mplayer(opts={})
